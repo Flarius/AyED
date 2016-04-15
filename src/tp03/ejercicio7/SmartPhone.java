@@ -17,6 +17,7 @@ public class SmartPhone extends Mobile {
 	
 	public boolean equals(SmartPhone o) {
 		if (this.getMarca() == o.getMarca()) {
+			System.out.println(this.getMarca() == o.getMarca());
 			if (this.getModelo() == o.getModelo()){
 				if (this.getSistemaOperativo() == o.getSistemaOperativo()){
 					if (this.getNumero() == o.getNumero()){
