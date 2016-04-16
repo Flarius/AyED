@@ -148,18 +148,17 @@ public class ListaDeEnterosEnlazada extends ListaDeEnteros {
 	@Override
 	public boolean incluye(Integer n) {
 		// TODO Auto-generated method stub
-		if (this.esVacia()){
+		if (this.esVacia()) {
 			return false;
-		}	
-		else{
-			NodoEntero aux = this.inicio;
-			for (int i = 1; i < this.tamanio(); i++) {
-				if (n == aux.getDato()){
-					return true;
-				}
+		}
+		NodoEntero aux = this.inicio;
+		for (int i = 1; i < this.tamanio(); i++) {
+			if (n == aux.getDato()) {
+				return true;
 			}
-		}return false;
-			
+		}
+		return false;
+
 	}
 	@Override
 	public int tamanio() {
@@ -179,11 +178,22 @@ public class ListaDeEnterosEnlazada extends ListaDeEnteros {
 		
 		return min;
 	}
+	public ListaDeEnterosEnlazada clonar (ListaDeEnterosEnlazada l){
+		int dato;
+		ListaDeEnterosEnlazada aux = new ListaDeEnterosEnlazada();
+		for (int i = 1; i < l.tamanio() ; i++){
+			dato = l.elemento(i);
+			aux.agregarEn(dato, i);
+		}
+		return aux;
+	}
 	//recibe una lista de enteros enlazado para retornarla ordenada del mas chico al mas grande
 	public ListaDeEnterosEnlazada ordenar (ListaDeEnterosEnlazada l){
 		if (l.esVacia() == true){
 			return null;
-		}	
+		}
+		ListaDeEnterosEnlazada l2 = new ListaDeEnterosEnlazada();
+		l2.clonar(l);
 		ListaDeEnterosEnlazada aux = new ListaDeEnterosEnlazada();
 		Integer dato;
 		while (l.esVacia() == false){
@@ -192,9 +202,5 @@ public class ListaDeEnterosEnlazada extends ListaDeEnteros {
 			l.eliminar(dato);
 		}
 		return aux;
-	}
-	
-	public Object queEsInicio (){
-		return (inicio);
 	}
 }

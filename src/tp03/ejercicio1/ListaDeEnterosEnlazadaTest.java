@@ -148,21 +148,25 @@ public class ListaDeEnterosEnlazadaTest {
 		
 	}
 
+	@Test
+	public void TestEsVacia (){
+		assertFalse (l.esVacia());
+		l.agregarInicio(1);
+		assertTrue (l.esVacia());
+	}
 	
 	@Test
 	public void testIncluye() {
 		//No se tiene que poder encontrar algo cuando la lista esta vacia
 		assertFalse(l.incluye(1));
-		System.out.println((l.queEsInicio()));
-		//Test de busqueda sobre el primer elemento
-		l.agregarEn(1, 1);
-		assertFalse(l.incluye(2));
+		//Creamos la lista con 10 elementos
+		for (int i = 1; i < 1000; i++) {
+			assertTrue(l.agregarEn(i, i));
+		}
 		
-		//Test con mas elementos
-		assertTrue(l.agregarEn(2, 2));
-		assertTrue(l.agregarEn(3, 3));
-		assertTrue(l.incluye(3));
-		assertFalse(l.incluye(4));
+		for (int i = 1; i < l.tamanio(); i++) {
+			assertTrue (l.incluye(i));
+		}
 	}
 	
 	@Test
@@ -185,5 +189,31 @@ public class ListaDeEnterosEnlazadaTest {
 		assertEquals(2, l.tamanio());
 		assertTrue(l.agregarInicio(1));
 		assertEquals(3, l.tamanio());
-	}	
+	}
+	@Test 
+	public void testClonar (){
+		ListaDeEnterosEnlazada l1 = new ListaDeEnterosEnlazada();
+		l1.agregarInicio(12);
+		l1.agregarInicio(43);
+		l1.agregarInicio(23);
+		l1.agregarInicio(78);
+		l1.agregarInicio(54);
+		l1.agregarInicio(33);
+		l1.agregarInicio(2);
+		l1.agregarInicio(1);
+		l1.agregarInicio(9);
+		l1.agregarInicio(999);
+		l1.agregarInicio(809);
+		l1.agregarInicio(344);
+		l1.agregarInicio(44);
+		l1.agregarInicio(123);
+		l1.agregarInicio(1342);
+		l1.agregarInicio(9809);
+		l1.agregarInicio(111);
+		l1.agregarInicio(183);
+		l.clonar(l1);
+		for (int i = 1; i < l1.tamanio(); i++) {
+			assertTrue (l.elemento(i) == l1.elemento(i));
+		}
+	}
 }
