@@ -8,15 +8,15 @@ public class NodoGenerico<T> {
 		
 	}
 	public T getDato(){
-		return null;
+		return dato;
 	}
 	public void setDato (T dato){
-		
+		this.dato = dato;
 	}
 	public NodoGenerico<T> getSiguiente(){
-		return null;
+		return siguiente;
 	}
 	public void setSiguiente (NodoGenerico<T> elemen){
-		
+		this.siguiente = elemen;
 	}
 }
