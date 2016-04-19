@@ -18,9 +18,9 @@ public class ListaGenericaTest {
 	public ListaEnlazadaGenerica<Integer> cargarlista(){
 		lista.agregarEn(12, 1);
 		lista.agregarEn(2, 2);
-		lista.agregarEn(2658, 3);
+		lista.agregarEn(2658, 2);
 		lista.agregarEn(112, 4);
-		lista.agregarEn(36, 5);
+		lista.agregarEn(36, 3);
 		lista.agregarEn(892, 6);
 		lista.agregarEn(147, 7);
 		return lista;
@@ -30,9 +30,9 @@ public class ListaGenericaTest {
 	public void agregarElementosEnTest (){
 		assertTrue(lista.agregarEn(12, 1));
 		assertTrue(lista.agregarEn(2, 2));
-		assertTrue(lista.agregarEn(2658, 3));
+		assertTrue(lista.agregarEn(2658, 2));
 		assertTrue(lista.agregarEn(112, 4));
-		assertTrue(lista.agregarEn(36, 5));
+		assertTrue(lista.agregarEn(36, 3));
 		assertTrue(lista.agregarEn(892, 6));
 		assertTrue(lista.agregarEn(147, 7));
 	}
@@ -59,7 +59,7 @@ public class ListaGenericaTest {
 		assertTrue(lista.proximo() == 36);
 		assertTrue(lista.proximo() == 892);
 	}
-	
+
 	@Test
 	public void esVacioTest(){
 		assertTrue(lista.esVacio());
@@ -68,23 +68,14 @@ public class ListaGenericaTest {
 		lista.comenzar();
 		assertFalse (lista.esVacio());
 	}
-	
-	@Test
-	public void tamanioTest(){
-		assertTrue (lista.tamanio() == 0);
-		lista = this.cargarlista();
-		assertTrue (lista.tamanio() == 7);
-//		lista.eliminarEn(2);
-//		assertTrue(lista.tamanio() == 6 );
-	}
-	
-	@Test
-	public void elminarEnTest (){
-		
-	}
-	
-	@Test
-	public void eleminarElementoTest (){
-		
-	}
+
+//	@Test
+//	public void elminarEnTest (){
+//		
+//	}
+//	
+//	@Test
+//	public void eleminarElementoTest (){
+//		
+//	}
 }

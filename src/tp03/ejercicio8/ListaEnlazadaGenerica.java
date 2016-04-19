@@ -2,8 +2,8 @@ package tp03.ejercicio8;
 
 
 public class ListaEnlazadaGenerica<T> extends ListaGenerica {
-	NodoGenerico<T> inicio;
-	NodoGenerico<T> fin;
+	NodoGenerico<T> inicio = null;
+	NodoGenerico<T> fin = null;
 	NodoGenerico<T> actual;
 	int tamanio;
 	
@@ -36,6 +36,8 @@ public class ListaEnlazadaGenerica<T> extends ListaGenerica {
 		if (pos < 1 || pos > this.tamanio()){
 			return null; 
 		}
+		
+		
 		NodoGenerico<T> aux = this.inicio;
 		int posAct = 1;
 		while (posAct != pos){
@@ -46,35 +48,61 @@ public class ListaEnlazadaGenerica<T> extends ListaGenerica {
 		return aux.getDato();
 	}
 
+	 
+	private boolean insertar( Object elemen, int pos) {
+		//se agrega el inicio de la lista
+		if (pos == 1){
+			this.tamanio = this.tamanio + 1;
+			NodoGenerico<T> aux = new NodoGenerico<T> ();
+			aux.setDato( (T)elemen);
+			aux.setSiguiente(inicio);
+			inicio = aux;
+		}
+		//se agrega en el final de la lista
+		else if (pos == this.tamanio()+1) {
+			this.tamanio = this.tamanio + 1;
+			NodoGenerico<T> aux = new NodoGenerico<T> ();
+			aux.setDato( (T)elemen);
+            actual.setSiguiente(aux);
+            aux.setSiguiente(fin);
+		}
+		//se agrega en el medio de la lista
+		else {
+			this.tamanio = this.tamanio + 1;
+			NodoGenerico<T> aux = new NodoGenerico<T>();
+		    aux.setDato( (T)elemen);
+		    aux.setSiguiente(actual.getSiguiente());
+		    actual.setSiguiente(aux);
+		}   
+		return true;
+		
+	}
+	
 	@Override
-	//agrega el elemento en la posicion indicada y retorna true si se pudo agregar 
-	public boolean agregarEn( Object elemen, int pos) {
-		// TODO Auto-generated method stub
+	//agrega el elemento en la posicion indicada y retorna true si se pudo agregar
+	public boolean agregarEn(Object elemen, int pos) {
 		if (pos < 1 || pos > this.tamanio() + 1){
 			return false; 
 		}
-		this.tamanio++;
-		NodoGenerico<T> aux = new NodoGenerico<T>();
-		aux.setDato((T) elemen);
-		if (pos == 1){
-			aux.setSiguiente(inicio);
-			inicio = aux;
+		this.comenzar();
+		int posAux = pos;
+		return this.mover(elemen, pos, posAux);
+	}
+	
+	//metodo que nos permite movernos en la lista
+	private boolean mover (Object elemen, int pos, int posAux){
+		if (posAux == 1){
+			return this.insertar(elemen, pos);
 		}else{
-			NodoGenerico<T> n = this.inicio;
-			NodoGenerico<T> ant = null;
-			int posActual = 1;
-			while (pos != posActual) {
-				ant = n;
-				n = n.getSiguiente();
-				posActual++;
-			}
-			aux.setSiguiente(n);
-			ant.setSiguiente(aux);
-			if (aux.getSiguiente()==null)
-				fin=aux;
+			if (actual.getSiguiente() != fin){
+				posAux = posAux - 1;
+				actual = actual.getSiguiente();
+				this.mover(elemen, pos, posAux);
+		    }else{
+		    	return this.insertar(elemen, pos);
+		    }
 		}
-		
-		return true;
+		return true;    
 	}
 
 	@Override
@@ -98,6 +126,9 @@ public class ListaEnlazadaGenerica<T> extends ListaGenerica {
 	@Override
 	public boolean eliminarEn(int pos) {
 		// TODO Auto-generated method stub
+		if (pos < 1 || pos > this.tamanio())
+			return false;
+		
 		return false;
 	}
 
@@ -140,7 +171,7 @@ public class ListaEnlazadaGenerica<T> extends ListaGenerica {
 	@Override
 	public void limpiar() {
 		// TODO Auto-generated method stub
-
+		
 	}
 	
 	public String toString (){
