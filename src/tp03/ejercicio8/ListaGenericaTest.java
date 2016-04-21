@@ -14,13 +14,13 @@ public class ListaGenericaTest {
 		
 	}
 	
-	//retorna una lista cargada
+//	//retorna una lista cargada
 	public ListaEnlazadaGenerica<Integer> cargarlista(){
 		lista.agregarEn(12, 1);
 		lista.agregarEn(2, 2);
-		lista.agregarEn(2658, 2);
+		lista.agregarEn(2658, 3);
 		lista.agregarEn(112, 4);
-		lista.agregarEn(36, 3);
+		lista.agregarEn(36, 5);
 		lista.agregarEn(892, 6);
 		lista.agregarEn(147, 7);
 		return lista;
@@ -28,13 +28,27 @@ public class ListaGenericaTest {
 
 	@Test 
 	public void agregarElementosEnTest (){
-		assertTrue(lista.agregarEn(12, 1));
-		assertTrue(lista.agregarEn(2, 2));
-		assertTrue(lista.agregarEn(2658, 2));
-		assertTrue(lista.agregarEn(112, 4));
-		assertTrue(lista.agregarEn(36, 3));
+		//se agregan al principio
+		assertTrue(lista.agregarEn(12, 1));		
+		assertTrue(lista.agregarEn(2, 1));
+		assertTrue(lista.agregarEn(2658, 1));
+		assertTrue(lista.agregarEn(112, 1));
+		
+		//se agregan consecutivamente
+		assertTrue(lista.agregarEn(36, 5));
 		assertTrue(lista.agregarEn(892, 6));
 		assertTrue(lista.agregarEn(147, 7));
+		
+		//se agregan al final
+		assertTrue(lista.agregarEn(147, lista.tamanio()));
+		assertTrue(lista.agregarEn(148, lista.tamanio()));
+		assertTrue(lista.agregarEn(149, lista.tamanio()));
+		
+		//se agregan en el medio
+		assertTrue(lista.agregarEn(121, 4));
+		assertTrue(lista.agregarEn(543, 5));
+		assertTrue(lista.agregarEn(878, 3));
+	
 	}
 	
 	@Test 

@@ -8,13 +8,25 @@ public class TestListaEnlazadaGenerica {
 		ListaEnlazadaGenerica<Integer> lista = new ListaEnlazadaGenerica<Integer> ();
 		lista.agregarEn(12, 1);
 		lista.agregarEn(2, 2);
-		lista.agregarEn(2658, 2);
-
+		lista.agregarEn(2658, 3);
+		lista.agregarEn(112, 4);
+		lista.agregarEn(36, 5);
+		lista.agregarEn(892, 6);
+		lista.agregarEn(147, 7);
 		
+		lista.comenzar();
 		for (int i = 1; i <= lista.tamanio(); i++) {
-			System.out.println("en la pos: " + i + "esta el elemento: "+ lista.elemento(i));
+			System.out.println(lista.elemento(i));
 		}
+		System.out.println("   ");
+		lista.agregarEn(999, 4);
+		for (int i = 1; i <= lista.tamanio(); i++) {
+			System.out.println(lista.elemento(i));
+		}		
+//		NodoGenerico<Integer> nodo = new NodoGenerico<>();
+//		nodo.setDato(45);
+//		System.out.println(nodo.getSiguiente());
+//	}
 
-	}
-
+}
 }
