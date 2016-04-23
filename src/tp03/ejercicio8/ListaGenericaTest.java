@@ -60,6 +60,10 @@ public class ListaGenericaTest {
 		assertTrue(lista.elemento(3) == 2658);
 		assertFalse(lista.elemento(4) == 12);
 		assertTrue(lista.elemento(5) == 36);
+		assertTrue(lista.agregarEn(143, 3));
+		assertTrue(lista.elemento(3) == 143);
+		assertTrue(lista.agregarFinal(8));
+		assertTrue(lista.elemento(lista.tamanio()) == 8);
 	}
 	
 	@Test 

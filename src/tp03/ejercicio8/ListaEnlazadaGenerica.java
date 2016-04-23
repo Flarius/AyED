@@ -85,6 +85,10 @@ public class ListaEnlazadaGenerica<T> extends ListaGenerica {
 			return false; 
 		}
 		this.comenzar();
+		if (pos != 1 && pos != this.tamanio()+1){
+		  int posAux = pos -1;
+		  return this.mover(elemen, pos, posAux);
+		}
 		int posAux = pos;
 		return this.mover(elemen, pos, posAux);
 	}
@@ -95,7 +99,7 @@ public class ListaEnlazadaGenerica<T> extends ListaGenerica {
 			return this.insertar(elemen, pos);
 		}else{
 			if (actual.getSiguiente() != fin){
-				posAux = posAux - 1;
+				posAux = posAux -1;
 				actual = actual.getSiguiente();
 				this.mover(elemen, pos, posAux);
 		    }else{
@@ -114,7 +118,7 @@ public class ListaEnlazadaGenerica<T> extends ListaGenerica {
 	@Override
 	public boolean agregarFinal(Object elemen) {
 		// TODO Auto-generated method stub
-		return this.agregarEn(elemen, this.tamanio());
+		return this.agregarEn(elemen, this.tamanio()+1);
 	}
 
 	@Override

@@ -19,7 +19,7 @@ public class TestListaEnlazadaGenerica {
 			System.out.println(lista.elemento(i));
 		}
 		System.out.println("   ");
-		lista.agregarEn(999, 4);
+		lista.agregarEn(999, 3);
 		for (int i = 1; i <= lista.tamanio(); i++) {
 			System.out.println(lista.elemento(i));
 		}		
