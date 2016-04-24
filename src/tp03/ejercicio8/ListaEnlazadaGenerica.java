@@ -36,8 +36,6 @@ public class ListaEnlazadaGenerica<T> extends ListaGenerica {
 		if (pos < 1 || pos > this.tamanio()){
 			return null; 
 		}
-		
-		
 		NodoGenerico<T> aux = this.inicio;
 		int posAct = 1;
 		while (posAct != pos){
@@ -85,28 +83,31 @@ public class ListaEnlazadaGenerica<T> extends ListaGenerica {
 			return false; 
 		}
 		this.comenzar();
+		
+		//en caso de tener que agregar en el medio
 		if (pos != 1 && pos != this.tamanio()+1){
 		  int posAux = pos -1;
-		  return this.mover(elemen, pos, posAux);
+		  this.mover(posAux);
+		  return this.insertar(elemen, pos);
 		}
+		//en caso deagregar al inicio o al final
 		int posAux = pos;
-		return this.mover(elemen, pos, posAux);
+		this.mover(posAux);
+		return this.insertar(elemen, pos);
 	}
 	
 	//metodo que nos permite movernos en la lista
-	private boolean mover (Object elemen, int pos, int posAux){
+	private NodoGenerico <T> mover (int posAux){
 		if (posAux == 1){
-			return this.insertar(elemen, pos);
+			return actual;
 		}else{
 			if (actual.getSiguiente() != fin){
 				posAux = posAux -1;
 				actual = actual.getSiguiente();
-				this.mover(elemen, pos, posAux);
-		    }else{
-		    	return this.insertar(elemen, pos);
+				this.mover(posAux);
 		    }
 		}
-		return true;    
+		return actual;    
 	}
 
 	@Override
@@ -132,7 +133,11 @@ public class ListaEnlazadaGenerica<T> extends ListaGenerica {
 		// TODO Auto-generated method stub
 		if (pos < 1 || pos > this.tamanio())
 			return false;
-		
+		this.comenzar();
+		if (pos != 1 && pos != this.tamanio() + 1){
+			int posAux = pos -1;
+//			return this.mover
+		}
 		return false;
 	}
 
