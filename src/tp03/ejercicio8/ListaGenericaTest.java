@@ -80,17 +80,45 @@ public class ListaGenericaTest {
 
 	@Test
 	public void esVacioTest(){
-		assertTrue(lista.esVacio());
+		assertTrue(lista.esVacia());
 		lista.comenzar();
 		this.agregarElementosEnTest();
 		lista.comenzar();
-		assertFalse (lista.esVacio());
+		assertFalse (lista.esVacia());
+	}
+	
+	@Test
+	//este test funciona si la lista posee mas de un elemento, caso contrario se produce una excepcion tipo nullPointer 
+	public void incluyeTest(){
+		this.cargarlista();
+		lista.comenzar();
+		assertTrue(lista.incluye(12));
+		assertTrue(lista.incluye(147));
+		assertTrue(lista.incluye(112));
 	}
 
-//	@Test
-//	public void elminarEnTest (){
-//		
-//	}
+	@Test
+	public void elminarEnTest (){
+		this.cargarlista();
+		assertTrue  (lista.eliminarEn(1));
+		assertFalse (lista.elemento(1) == 12);
+		assertTrue  (lista.elemento(1) == 2);
+		assertTrue  (lista.tamanio() == 6);
+		assertTrue  (lista.eliminarEn(lista.tamanio()));
+		assertFalse (lista.elemento(lista.tamanio()) == 147);
+		assertTrue  (lista.elemento(lista.tamanio()) == 892);
+		assertTrue  (lista.eliminarEn(4));
+		assertFalse (lista.elemento(4) == 112);
+		assertTrue  (lista.elemento(4) == 892);
+	}
+	
+	@Test
+	public void vaciarTest (){
+		this.cargarlista();
+		lista.limpiar();
+		assertTrue  (lista.tamanio() == 0);
+		assertFalse (lista.eliminarEn(1));
+	}
 //	
 //	@Test
 //	public void eleminarElementoTest (){

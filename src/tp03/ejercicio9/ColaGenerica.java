@@ -1,5 +1,6 @@
 package tp03.ejercicio9;
 
+import tp03.ejercicio8.ListaEnlazadaGenerica;
 import tp03.ejercicio8.ListaGenerica;
 
 public class ColaGenerica<T> {
@@ -7,18 +8,21 @@ public class ColaGenerica<T> {
 	
 	public ColaGenerica() {
 		// TODO Auto-generated constructor stub
+		datos = new ListaEnlazadaGenerica<T>();
 	}
 	
 	public void encolar(T elemen){
-		
+		datos.agregarFinal(elemen);
 	}
 	public T desencolar (){
-		return null;
+		T elemen = datos.elemento(1);
+		datos.eliminarEn(1);
+		return elemen;
 	}
 	public boolean esVacia (){
-		return false;
+		return datos.esVacia();
 	}
 	public T tope(){
-		return null;
+		return (T)datos.elemento(1);
 	}
 }

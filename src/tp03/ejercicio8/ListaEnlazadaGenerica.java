@@ -1,190 +1,227 @@
 package tp03.ejercicio8;
 
+/**
+ * La clase ListaGenericaEnlazada es una ListaGenerica, donde los elementos de
+ * la lista (nodos) referencian al siguiente elemento (nodo), por este motivo,
+ * la ListaEnlazadaGenerica no tiene limite en la cantidad de elementos que se
+ * pueden almacenar.
+ * */
+public class ListaEnlazadaGenerica<T> extends ListaGenerica<T> {
+	/* primer nodo de la lista, si la lista esta vacia, inicio es null */
+	private NodoGenerico<T> inicio;
 
-public class ListaEnlazadaGenerica<T> extends ListaGenerica {
-	NodoGenerico<T> inicio = null;
-	NodoGenerico<T> fin = null;
-	NodoGenerico<T> actual;
-	int tamanio;
-	
+	/*
+	 * nodo actual que se va actualizando a medida que recorremos la lista, si
+	 * la lista esta vacia, actual es null
+	 */
+	private NodoGenerico<T> actual;
+
+	/* ultimo nodo de la lista, si la lista esta vacia, fin es null */
+	private NodoGenerico<T> fin;
+
+	/* cantidad de nodos en la lista */
+	private int tamanio;
+
 	@Override
 	public void comenzar() {
-		// TODO Auto-generated method stub
 		actual = inicio;
 	}
 
 	@Override
-	//retorna el elemento actual y avanza al proximo de la lista
 	public T proximo() {
-		// TODO Auto-generated method stub
-		T dato = actual.getDato();
-		actual = actual.getSiguiente();
-		return dato;
+		T elem = this.actual.getDato();
+		this.actual = this.actual.getSiguiente();
+		return elem;
 	}
 
 	@Override
-	//determina si llego al final o no de la lista
 	public boolean fin() {
-		// TODO Auto-generated method stub
-		return (actual == fin);
+		return (this.actual == null);
 	}
 
 	@Override
-	//retorna el elemento de la posicion indicada
 	public T elemento(int pos) {
-		// TODO Auto-generated method stub
-		if (pos < 1 || pos > this.tamanio()){
-			return null; 
-		}
-		NodoGenerico<T> aux = this.inicio;
-		int posAct = 1;
-		while (posAct != pos){
-			aux=aux.getSiguiente();
-			posAct++;
-		}
-		
-		return aux.getDato();
+		if (pos < 1 || pos > this.tamanio()) // no es posicion valida
+			return null;
+		NodoGenerico<T> n = this.inicio;
+		while (pos-- > 1)
+			n = n.getSiguiente();
+		return n.getDato();
 	}
 
-	 
-	private boolean insertar( Object elemen, int pos) {
-		//se agrega el inicio de la lista
-		if (pos == 1){
-			this.tamanio = this.tamanio + 1;
-			NodoGenerico<T> aux = new NodoGenerico<T> ();
-			aux.setDato( (T)elemen);
+	@Override
+	public boolean agregarEn(T elem, int pos) {
+		if (pos < 1 || pos > this.tamanio() + 1) // posicion no valida
+			return false;
+		this.tamanio++;
+		NodoGenerico<T> aux = new NodoGenerico<T>();
+		aux.setDato(elem);
+		if (pos == 1) { // inserta al principio
 			aux.setSiguiente(inicio);
-			inicio = aux;
+			this.inicio = aux;
+		} else {
+			NodoGenerico<T> n = this.inicio;
+			NodoGenerico<T> ant = null;
+			int posActual = 1;
+			while (!(n == null) && (posActual < pos)) {
+				ant = n;
+				n = n.getSiguiente();
+				posActual++;
+			}
+			aux.setSiguiente(n);
+			ant.setSiguiente(aux);
+
+			if (aux.getSiguiente() == null)
+				this.fin = aux;
 		}
-		//se agrega en el final de la lista
-		else if (pos == this.tamanio()+1) {
-			this.tamanio = this.tamanio + 1;
-			NodoGenerico<T> aux = new NodoGenerico<T> ();
-			aux.setDato( (T)elemen);
-            actual.setSiguiente(aux);
-            aux.setSiguiente(fin);
-		}
-		//se agrega en el medio de la lista
-		else {
-			this.tamanio = this.tamanio + 1;
-			NodoGenerico<T> aux = new NodoGenerico<T>();
-		    aux.setDato( (T)elemen);
-		    aux.setSiguiente(actual.getSiguiente());
-		    actual.setSiguiente(aux);
-		}   
 		return true;
-		
-	}
-	
-	@Override
-	//agrega el elemento en la posicion indicada y retorna true si se pudo agregar
-	public boolean agregarEn(Object elemen, int pos) {
-		if (pos < 1 || pos > this.tamanio() + 1){
-			return false; 
-		}
-		this.comenzar();
-		
-		//en caso de tener que agregar en el medio
-		if (pos != 1 && pos != this.tamanio()+1){
-		  int posAux = pos -1;
-		  this.mover(posAux);
-		  return this.insertar(elemen, pos);
-		}
-		//en caso deagregar al inicio o al final
-		int posAux = pos;
-		this.mover(posAux);
-		return this.insertar(elemen, pos);
-	}
-	
-	//metodo que nos permite movernos en la lista
-	private NodoGenerico <T> mover (int posAux){
-		if (posAux == 1){
-			return actual;
-		}else{
-			if (actual.getSiguiente() != fin){
-				posAux = posAux -1;
-				actual = actual.getSiguiente();
-				this.mover(posAux);
-		    }
-		}
-		return actual;    
 	}
 
 	@Override
-	public boolean agregarInicio(Object elemen) {
-		// TODO Auto-generated method stub
-		return this.agregarEn(elemen, 1);
+	public boolean agregarInicio(T elem) {
+		NodoGenerico<T> aux = new NodoGenerico<T>();
+		aux.setDato(elem);
+
+		if (this.inicio == null) {
+			this.inicio = aux;
+			this.actual = aux;
+			this.fin = aux;
+		} else {
+			aux.setSiguiente(this.inicio);
+			this.inicio = aux;
+		}
+		this.tamanio++;
+		return true;
 	}
 
 	@Override
-	public boolean agregarFinal(Object elemen) {
-		// TODO Auto-generated method stub
-		return this.agregarEn(elemen, this.tamanio()+1);
+	public boolean agregarFinal(T elem) {
+		NodoGenerico<T> aux = new NodoGenerico<T>();
+		aux.setDato(elem);
+		if (this.inicio == null) {
+			this.inicio = aux;
+			this.actual = aux;
+			this.fin = aux;
+		} else {
+			fin.setSiguiente(aux);
+			fin = aux;
+		}
+		tamanio++;
+		return true;
 	}
 
 	@Override
-	public boolean eliminar(Object elemen) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean eliminar(T elem) {
+		NodoGenerico<T> n = this.inicio;
+		NodoGenerico<T> ant = null;
+		while ((n != null) && (!n.getDato().equals(elem))) {
+			ant = n;
+			n = n.getSiguiente();
+		}
+		if (n == null)
+			return false;
+		else {
+			if (ant == null)
+				this.inicio = this.inicio.getSiguiente();
+			else
+				ant.setSiguiente(n.getSiguiente());
+			this.tamanio--;
+
+			return true;
+		}
 	}
 
 	@Override
 	public boolean eliminarEn(int pos) {
-		// TODO Auto-generated method stub
-		if (pos < 1 || pos > this.tamanio())
+		if (pos < 1 || pos > this.tamanio()) // posicion no valida
 			return false;
-		this.comenzar();
-		if (pos != 1 && pos != this.tamanio() + 1){
-			int posAux = pos -1;
-//			return this.mover
+		this.tamanio--;
+		if (pos == 1) {
+			this.inicio = this.inicio.getSiguiente();
+			return true;
 		}
-		return false;
+		NodoGenerico<T> n = this.inicio;
+		NodoGenerico<T> ant = null;
+		while (!(n == null) && (pos > 1)) {
+			pos--;
+			ant = n;
+			n = n.getSiguiente();
+		}
+		ant.setSiguiente(n.getSiguiente());
+		if (ant.getSiguiente() == null)
+			this.fin = ant;
+		return true;
 	}
 
 	@Override
-	public boolean esVacio() {
-		// TODO Auto-generated method stub
-		return this.inicio == this.fin;
+	public boolean incluye(T elem) {
+		NodoGenerico<T> n = this.inicio;
+		while (!(n == null) && !(n.getDato().equals(elem)))
+			n = n.getSiguiente();
+		return !(n == null);
 	}
 
 	@Override
-	public boolean incluye(Object elemen) {
-		// TODO Auto-generated method stub
-		return false;
+	public String toString() {
+		String str = "";
+		NodoGenerico<T> n = this.inicio;
+		while (n != null) {
+			str = str + n.getDato() + " -> ";
+			n = n.getSiguiente();
+		}
+		if (str.length() > 1)
+			str = str.substring(0, str.length() - 4);
+		return str;
 	}
 
 	@Override
 	public int tamanio() {
-		// TODO Auto-generated method stub
 		return this.tamanio;
 	}
 
 	@Override
-	public boolean reemplazar(Object elemen, int pos) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean esVacia() {
+		return this.tamanio() == 0;
 	}
 
 	@Override
-	public boolean agregarTodos(ListaGenerica l) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean reemplazarEn(T elem, int pos) {
+		if (pos < 1 || pos > this.tamanio()) // posicion no valida
+			return false;
+		NodoGenerico<T> n = this.inicio;
+		while (!(n == null) && (pos > 1)) {
+			pos--;
+			n = n.getSiguiente();
+		}
+		n.setDato(elem);
+		return true;
 	}
 
 	@Override
-	public ListaGenerica clonar() {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean agregarTodos(ListaGenerica<T> lista) {
+		lista.comenzar();
+
+		while (!lista.fin()) {
+			this.agregarFinal(lista.proximo());
+		}
+		return true;
+	}
+
+	@Override
+	public ListaGenerica<T> clonar() {
+		ListaGenerica<T> nueva = new ListaEnlazadaGenerica<T>();
+		this.comenzar();
+		while (!this.fin()) {
+			nueva.agregarFinal(this.proximo());
+		}
+		return nueva;
 	}
 
 	@Override
 	public void limpiar() {
-		// TODO Auto-generated method stub
-		
+		this.inicio = null;
+		this.actual = null;
+		this.fin = null;
+		this.tamanio = 0;
 	}
-	
-	public String toString (){
-		return "";
-	}
-
 }

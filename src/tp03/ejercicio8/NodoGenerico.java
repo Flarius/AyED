@@ -1,22 +1,22 @@
 package tp03.ejercicio8;
-
+/**
+ * Esta clase representa un nodo de la lista de enteros enlazada.
+ * */
 public class NodoGenerico<T> {
 	private T dato;
 	private NodoGenerico<T> siguiente;
 	
-	public NodoGenerico(){
-		
-	}
-	public T getDato(){
+	public T getDato() {
 		return dato;
 	}
-	public void setDato (T dato){
+	public void setDato(T dato) {
 		this.dato = dato;
 	}
-	public NodoGenerico<T> getSiguiente(){
+	public NodoGenerico<T> getSiguiente() {
 		return siguiente;
 	}
-	public void setSiguiente (NodoGenerico<T> elemen){
-		this.siguiente = elemen;
+	public void setSiguiente(NodoGenerico<T> siguiente) {
+		this.siguiente = siguiente;
 	}
+
 }
