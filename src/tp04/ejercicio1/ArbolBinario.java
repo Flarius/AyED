@@ -1,10 +1,12 @@
 package tp04.ejercicio1;
 
+import tp03.ejercicio8.ListaEnlazadaGenerica;
 import tp03.ejercicio8.ListaGenerica;
 
 public class ArbolBinario<T> {
 
 	private NodoBinario<T> raiz;
+	int cantidad;
 
 	public ArbolBinario(T dato) {
 		this.raiz = new NodoBinario<T>(dato);
@@ -57,21 +59,77 @@ public class ArbolBinario<T> {
 	public boolean esHoja() {
 		return this.getDatoRaiz() != null && this.getHijoIzquierdo().esVacio() && this.getHijoDerecho().esVacio();
 	}
-
-	public ListaGenerica<T> frontera() {
-		// Falta implementar. Ejercicio 2.a de la práctica
-		return null;
+	
+	private void frontera (ListaGenerica<T> l, ArbolBinario<T> a){
+		if (a.esHoja()){
+			l.agregarFinal(a.getDatoRaiz());
+		}
+		
+		if (!a.getHijoIzquierdo().esVacio()){
+			a.getHijoIzquierdo().frontera(l,a.getHijoIzquierdo());
+		}
+		
+		if (!a.getHijoDerecho().esVacio()){
+			a.getHijoDerecho().frontera(l,a.getHijoDerecho());
+		}
+		
 	}
+	
+	public ListaGenerica<T> frontera() {
 
-	public boolean lleno() {
-		// Falta implementar. Ejercicio 2.b de la práctica
-		return true;
+		ListaGenerica<T> l = new ListaEnlazadaGenerica<T> ();
+		this.frontera (l, this);
+		return l;
 	}
 
 	public boolean completo() {
-		// Falta implementar. Ejercicio 2.c de la práctica
+		// Falta implementar. Ejercicio 2.b de la práctica
+		
 		return true;
+	}
 
+	public boolean lleno() {
+		int altura = this.altura(raiz); 
+		//no esta funcionando bien el metodo para sacar la cantidad de nodos
+		//this.cantidadDeNodosEnElArbol (this.raiz);
+		this.cantidad();
+		int cantidadDeNodosActual = (int) Math.pow(2, (altura + 1)) -1;
+		if (cantidadDeNodosActual == this.cantidad){
+			return true;
+		}
+		return false;
+
+	}
+	public int cantidad (){
+		cantidad = 0;
+		cantidad (raiz);
+		return cantidad;
+	}
+	private void cantidad (NodoBinario<T> a){
+		if (a != null){
+			cantidad++;
+			cantidad(a.getHijoIzquierdo());
+			cantidad(a.getHijoDerecho());
+		}
+//		this.cantidad++;
+//		if (!a.getHijoIzquierdo().esHoja()){
+//			this.preOrden(a.getHijoIzquierdo());
+//		}
+//		if (!a.getHijoDerecho().esHoja()){
+//			this.preOrden(a.getHijoDerecho());
+//		}
+	}
+		
+	private int altura (NodoBinario<T> nodo){
+		int altDer;
+		int altIzq;
+		if (nodo == null)
+			return -1;
+		else{
+			altDer = 1 + altura(nodo.getHijoDerecho());
+			altIzq = 1 + altura(nodo.getHijoIzquierdo());
+			return Math.max(altDer, altIzq);
+		}
 	}
 
 }
