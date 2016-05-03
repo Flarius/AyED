@@ -89,35 +89,23 @@ public class ArbolBinario<T> {
 	}
 
 	public boolean lleno() {
-		int altura = this.altura(raiz); 
-		//no esta funcionando bien el metodo para sacar la cantidad de nodos
-		//this.cantidadDeNodosEnElArbol (this.raiz);
-		this.cantidad();
-		int cantidadDeNodosActual = (int) Math.pow(2, (altura + 1)) -1;
-		if (cantidadDeNodosActual == this.cantidad){
+		if ( (int) Math.pow(2, (this.altura(raiz) + 1)) -1 == this.cantidad())
 			return true;
-		}
 		return false;
-
 	}
+	
 	public int cantidad (){
 		cantidad = 0;
 		cantidad (raiz);
 		return cantidad;
 	}
+	
 	private void cantidad (NodoBinario<T> a){
 		if (a != null){
 			cantidad++;
 			cantidad(a.getHijoIzquierdo());
 			cantidad(a.getHijoDerecho());
 		}
-//		this.cantidad++;
-//		if (!a.getHijoIzquierdo().esHoja()){
-//			this.preOrden(a.getHijoIzquierdo());
-//		}
-//		if (!a.getHijoDerecho().esHoja()){
-//			this.preOrden(a.getHijoDerecho());
-//		}
 	}
 		
 	private int altura (NodoBinario<T> nodo){

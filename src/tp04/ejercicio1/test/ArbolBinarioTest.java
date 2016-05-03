@@ -196,10 +196,5 @@ public class ArbolBinarioTest {
 		assertTrue(arbolBinarioA.completo());
 		assertFalse(arbolBinarioC.completo());
 		assertTrue(arbolBinarioD.completo());
-	}
-
-
-	
-
-	
+	}	
 }
