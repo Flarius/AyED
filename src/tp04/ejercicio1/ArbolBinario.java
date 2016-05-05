@@ -89,9 +89,7 @@ public class ArbolBinario<T> {
 	}
 
 	public boolean lleno() {
-		if ( (int) Math.pow(2, (this.altura(raiz) + 1)) -1 == this.cantidad())
-			return true;
-		return false;
+		return (int) Math.pow(2, (this.altura(raiz) + 1)) -1 == this.cantidad();
 	}
 	
 	public int cantidad (){
